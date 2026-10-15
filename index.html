@@ -1,15 +1,626 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CLAYSOLE — Sneakers Without Rules</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root {
+  --blue: #3535ef;
+  --yellow: #f9ed63;
+  --pink: #ff7bac;
+  --orange: #ff784d;
+  --cream: #f8f4e9;
+  --ink: #191817;
+  --green: #b9e87a;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; }
+.topbar {
+  background: var(--yellow);
+  text-align: center;
+  padding: 10px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+nav {
+  height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 6%;
+  border-bottom: 1px solid #ded9ce;
+  position: relative;
+  z-index: 5;
+}
+.logo {
+  font: 800 27px 'Space Grotesk', sans-serif;
+  letter-spacing: -2px;
+}
+.logo span { color: var(--blue); }
+.navlinks { display: flex; gap: 30px; font-size: 12px; font-weight: 700; }
+.navlinks a:hover { color: var(--blue); }
+.navright { display: flex; align-items: center; gap: 18px; }
+.bag {
+  border: 1px solid var(--ink);
+  padding: 10px 15px;
+  border-radius: 30px;
+  background: transparent;
+  font-size: 11px;
+  font-weight: 800;
+}
+.menu { display: none; border: 0; background: none; font-size: 24px; }
+
+.hero {
+  min-height: 610px;
+  background: var(--blue);
+  color: white;
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 70px 7% 60px;
+}
+.hero-copy { position: relative; z-index: 2; align-self: center; }
+.eyebrow {
+  font-size: 10px;
+  letter-spacing: 3px;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 25px;
+}
+.hero h1 {
+  font: 700 clamp(62px, 8.4vw, 118px)/.84 'Space Grotesk', sans-serif;
+  letter-spacing: -8px;
+  text-transform: uppercase;
+}
+.hero h1 em { color: var(--yellow); font-style: normal; }
+.hero-desc {
+  max-width: 300px;
+  font-size: 13px;
+  line-height: 1.8;
+  margin-top: 30px;
+  color: #dedcff;
+}
+.cta {
+  display: inline-flex;
+  margin-top: 27px;
+  background: var(--yellow);
+  color: var(--ink);
+  border-radius: 40px;
+  padding: 16px 24px;
+  font-size: 11px;
+  font-weight: 800;
+  gap: 24px;
+  align-items: center;
+  transition: transform .2s;
+}
+.cta:hover { transform: translateY(-4px) rotate(-2deg); }
+.hero-art {
+  min-height: 430px;
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+.blob {
+  position: absolute;
+  width: 380px;
+  height: 340px;
+  background: var(--pink);
+  border-radius: 43% 57% 57% 43% / 47% 39% 61% 53%;
+  transform: rotate(-18deg);
+  box-shadow: inset -15px -17px 0 #e9659a;
+}
+.star {
+  position: absolute;
+  font-size: 55px;
+  color: var(--yellow);
+  z-index: 2;
+}
+.star.s1 { top: 20px; right: 8%; transform: rotate(17deg); }
+.star.s2 { bottom: 18px; left: 5%; font-size: 35px; color: white; }
+.shoe {
+  width: 280px;
+  height: 140px;
+  position: relative;
+  transform: rotate(-20deg);
+  z-index: 2;
+  filter: drop-shadow(8px 18px 2px #2223);
+  transition: transform .35s;
+}
+.hero-art:hover .shoe { transform: rotate(-14deg) translateY(-10px) scale(1.04); }
+.shoe-upper {
+  position: absolute;
+  bottom: 29px;
+  left: 15px;
+  width: 250px;
+  height: 94px;
+  background: var(--yellow);
+  border-radius: 70% 35% 25% 25% / 60% 50% 30% 30%;
+  border-bottom: 9px solid #d8c94a;
+  box-shadow: inset -10px -8px 0 #e1d04c, inset 8px 5px 0 #fff8a6;
+}
+.shoe-upper:before {
+  content: '';
+  position: absolute;
+  width: 110px;
+  height: 65px;
+  left: 82px;
+  top: 5px;
+  border-radius: 60% 20% 20% 20%;
+  background: var(--orange);
+  transform: skewX(-20deg);
+  box-shadow: inset -5px -5px 0 #dc603c;
+}
+.shoe-upper:after {
+  content: '';
+  position: absolute;
+  width: 80px;
+  height: 35px;
+  left: 30px;
+  top: 5px;
+  border-radius: 60% 20% 20% 20%;
+  background: var(--pink);
+}
+.shoe-sole {
+  position: absolute;
+  bottom: 13px;
+  left: 5px;
+  width: 267px;
+  height: 34px;
+  background: white;
+  border-radius: 10px 15px 30px 30px;
+  border-bottom: 7px solid #d3d0c7;
+}
+.shoe-sole:after {
+  content: '';
+  position: absolute;
+  left: 30px;
+  right: 20px;
+  bottom: -4px;
+  border-bottom: 2px dashed #b5b1a8;
+}
+.lace {
+  position: absolute;
+  z-index: 3;
+  width: 50px;
+  height: 4px;
+  background: white;
+  border-radius: 5px;
+  left: 115px;
+  top: 55px;
+  transform: rotate(-14deg);
+  box-shadow: 3px 12px 0 white, -2px 24px 0 white;
+}
+.shoe-mark {
+  position: absolute;
+  right: 47px;
+  top: 51px;
+  font-size: 37px;
+  color: var(--blue);
+  font-weight: 900;
+  z-index: 3;
+  transform: rotate(-20deg);
+}
+.floating {
+  position: absolute;
+  border-radius: 50%;
+  z-index: 1;
+}
+.f1 { width: 43px; height: 43px; background: var(--yellow); top: 18%; left: 12%; }
+.f2 { width: 23px; height: 23px; background: white; bottom: 16%; right: 9%; }
+.f3 { width: 70px; height: 70px; border: 10px solid var(--orange); top: 4%; left: 45%; }
+.hero-label {
+  position: absolute;
+  right: 0;
+  bottom: 7%;
+  font-size: 9px;
+  letter-spacing: 2px;
+  font-weight: 800;
+  transform: rotate(-90deg);
+}
+.ticker {
+  overflow: hidden;
+  background: var(--yellow);
+  white-space: nowrap;
+  padding: 15px 0;
+  font: 800 13px 'Space Grotesk', sans-serif;
+  letter-spacing: 2px;
+}
+.ticker-track { display: inline-block; animation: ticker 24s linear infinite; }
+.ticker span { margin: 0 26px; }
+.ticker b { color: var(--blue); }
+@keyframes ticker { to { transform: translateX(-50%); } }
+
+.section { padding: 90px 7%; }
+.section-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 36px;
+}
+.section-head h2 {
+  font: 700 clamp(38px, 5vw, 64px)/.95 'Space Grotesk', sans-serif;
+  letter-spacing: -3px;
+  text-transform: uppercase;
+}
+.section-head p { font-size: 12px; color: #68645e; line-height: 1.7; max-width: 240px; }
+.filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 27px; }
+.filter {
+  background: transparent;
+  border: 1px solid #d5d0c6;
+  border-radius: 25px;
+  padding: 10px 17px;
+  font-size: 10px;
+  font-weight: 800;
+}
+.filter.active, .filter:hover { background: var(--ink); color: white; border-color: var(--ink); }
+.products { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.product-card { min-width: 0; }
+.product-visual {
+  aspect-ratio: 4/4.5;
+  border-radius: 5px;
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+.product-visual.yellow { background: var(--yellow); }
+.product-visual.pink { background: #ffb3cb; }
+.product-visual.green { background: #bde98b; }
+.product-visual.lilac { background: #c7b8ff; }
+.product-visual.orange { background: #ff9b73; }
+.product-visual.blue { background: #9ebeff; }
+.product-visual .shoe { transform: rotate(-28deg) scale(.82); }
+.product-card:hover .shoe { transform: rotate(-19deg) scale(.9) translateY(-7px); }
+.product-visual .shoe-upper { background: var(--shoe-color, white); }
+.product-visual .shoe-upper:before { background: var(--accent-color, var(--blue)); }
+.product-visual .shoe-upper:after { background: var(--secondary-color, var(--pink)); }
+.product-visual .shoe-mark { color: var(--accent-color, var(--blue)); }
+.product-visual .shoe-sole { background: var(--sole-color, white); }
+.tag {
+  position: absolute;
+  top: 13px;
+  left: 13px;
+  background: white;
+  padding: 7px 10px;
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+  border-radius: 20px;
+}
+.quick-add {
+  position: absolute;
+  right: 13px;
+  bottom: 13px;
+  width: 43px;
+  height: 43px;
+  background: white;
+  border: 0;
+  border-radius: 50%;
+  font-size: 22px;
+  transition: background .2s, color .2s;
+}
+.quick-add:hover { background: var(--blue); color: white; }
+.product-info { display: flex; justify-content: space-between; gap: 10px; padding: 15px 2px; }
+.product-info h3 { font-size: 13px; font-weight: 800; }
+.product-info p { color: #777169; font-size: 10px; margin-top: 5px; }
+.price { font-size: 13px; font-weight: 800; white-space: nowrap; }
+
+.manifesto {
+  background: var(--orange);
+  padding: 85px 7%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  align-items: center;
+}
+.manifesto h2 {
+  font: 700 clamp(45px, 6vw, 80px)/.9 'Space Grotesk', sans-serif;
+  letter-spacing: -5px;
+  text-transform: uppercase;
+}
+.manifesto h2 span { color: white; }
+.manifesto-copy p { font-size: 14px; line-height: 1.9; max-width: 360px; }
+.stamp {
+  margin-top: 25px;
+  display: inline-grid;
+  place-items: center;
+  width: 95px;
+  height: 95px;
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  text-align: center;
+  font-size: 10px;
+  line-height: 1.4;
+  font-weight: 800;
+  transform: rotate(12deg);
+}
+.values {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-bottom: 1px solid #ded9ce;
+}
+.value { padding: 35px 25px; border-right: 1px solid #ded9ce; }
+.value:last-child { border: 0; }
+.value b { font: 700 24px 'Space Grotesk', sans-serif; }
+.value p { margin-top: 10px; font-size: 11px; color: #6f6a62; line-height: 1.8; }
+.newsletter {
+  background: var(--green);
+  margin: 70px 7%;
+  padding: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  border-radius: 4px;
+}
+.newsletter h2 {
+  font: 700 clamp(30px, 4vw, 47px)/.95 'Space Grotesk', sans-serif;
+  letter-spacing: -2px;
+  text-transform: uppercase;
+}
+.newsletter p { margin-top: 10px; font-size: 11px; }
+.signup { display: flex; width: min(100%, 360px); border-bottom: 2px solid var(--ink); }
+.signup input { min-width: 0; flex: 1; padding: 14px 0; background: transparent; border: 0; outline: 0; font: inherit; font-size: 12px; }
+.signup button { border: 0; background: transparent; font-weight: 800; font-size: 11px; }
+footer { background: var(--ink); color: white; padding: 50px 7% 25px; }
+.footer-top { display: flex; justify-content: space-between; gap: 30px; flex-wrap: wrap; }
+.footer-logo { font: 800 40px 'Space Grotesk', sans-serif; letter-spacing: -3px; }
+.footer-logo span { color: var(--yellow); }
+.footer-note { font-size: 11px; line-height: 1.9; color: #aaa7a1; margin-top: 12px; }
+.footer-links { display: flex; gap: 35px; font-size: 11px; font-weight: 700; }
+.footer-links a:hover { color: var(--yellow); }
+.footer-bottom { border-top: 1px solid #383735; margin-top: 45px; padding-top: 20px; display: flex; justify-content: space-between; color: #aaa7a1; font-size: 9px; letter-spacing: 1px; gap: 15px; flex-wrap: wrap; }
+.toast {
+  position: fixed;
+  bottom: 25px;
+  left: 50%;
+  transform: translate(-50%, 100px);
+  background: var(--ink);
+  color: white;
+  padding: 14px 22px;
+  border-radius: 30px;
+  font-size: 12px;
+  z-index: 10;
+  transition: transform .3s;
+}
+.toast.show { transform: translate(-50%, 0); }
+@media (max-width: 760px) {
+  nav { height: 65px; padding: 0 5%; }
+  .logo { font-size: 24px; }
+  .navlinks { display: none; }
+  .menu { display: block; }
+  .hero { grid-template-columns: 1fr; padding: 58px 7% 20px; }
+  .hero h1 { font-size: clamp(66px, 16vw, 100px); letter-spacing: -5px; }
+  .hero-art { min-height: 330px; }
+  .blob { width: 280px; height: 255px; }
+  .hero-art .shoe { transform: rotate(-20deg) scale(.84); }
+  .hero-art:hover .shoe { transform: rotate(-14deg) scale(.88); }
+  .hero-label { right: -15px; }
+  .section { padding: 65px 5%; }
+  .section-head { align-items: start; flex-direction: column; }
+  .products { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 12px; }
+  .product-visual .shoe { transform: rotate(-28deg) scale(.64); }
+  .product-card:hover .shoe { transform: rotate(-20deg) scale(.7); }
+  .product-info { flex-direction: column; gap: 5px; }
+  .manifesto { grid-template-columns: 1fr; gap: 30px; padding: 65px 7%; }
+  .manifesto h2 { letter-spacing: -3px; }
+  .values { grid-template-columns: 1fr; }
+  .value { border-right: 0; border-bottom: 1px solid #ded9ce; padding: 25px 7%; }
+  .newsletter { margin: 45px 5%; padding: 30px 23px; flex-direction: column; align-items: start; }
+  .signup { width: 100%; }
+  .footer-links { gap: 18px; flex-wrap: wrap; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; transition: none !important; }
+}
+</style>
 </head>
 <body>
-    <h1>Hello World</h1>
-    <h1>Hello World</h1>
-    <h1>Hello World</h1>
-    <h1>Hello World</h1>
-    
+
+<div class="topbar">Free shipping on orders over ₹2,999 — Good things take bold steps.</div>
+
+<nav>
+  <a class="logo" href="#">CLAY<span>SOLE</span>®</a>
+  <div class="navlinks">
+    <a href="#shop">SHOP ALL</a>
+    <a href="#story">OUR WORLD</a>
+    <a href="#values">WHY CLAYSOLE</a>
+  </div>
+  <div class="navright">
+    <button class="bag" id="bagBtn">BAG (<span id="bagCount">0</span>)</button>
+    <button class="menu" aria-label="Open navigation" onclick="document.getElementById('mobileNav').hidden = !document.getElementById('mobileNav').hidden">☰</button>
+  </div>
+</nav>
+<div id="mobileNav" hidden style="padding:18px 6%;background:#fff;position:relative;z-index:4">
+  <a href="#shop">Shop all</a> · <a href="#story">Our world</a> · <a href="#values">Why Claysole</a>
+</div>
+
+<main>
+<section class="hero">
+  <div class="hero-copy">
+    <p class="eyebrow">Independent footwear · Est. 2026</p>
+    <h1>Walk<br>your<br><em>weird.</em></h1>
+    <p class="hero-desc">Big shapes. Loud colours. Zero boring energy. Meet sneakers made for people who were never built to blend in.</p>
+    <a class="cta" href="#shop">FIND YOUR PAIR <span>↗</span></a>
+  </div>
+  <div class="hero-art" aria-label="Decorative sculptural clay-style sneaker illustration">
+    <div class="blob"></div>
+    <div class="f1 floating"></div><div class="f2 floating"></div><div class="f3 floating"></div>
+    <span class="star s1">✳</span><span class="star s2">✳</span>
+    <div class="shoe">
+      <div class="shoe-upper"></div>
+      <div class="lace"></div>
+      <div class="shoe-mark">✦</div>
+      <div class="shoe-sole"></div>
+    </div>
+    <div class="hero-label">NOT MADE TO MATCH.</div>
+  </div>
+</section>
+
+<div class="ticker"><div class="ticker-track">
+  <span>LESS ORDINARY</span><b>✳</b><span>MORE PERSONALITY</span><b>✳</b><span>MADE TO STAND OUT</span><b>✳</b><span>WALK YOUR WEIRD</span><b>✳</b><span>LESS ORDINARY</span><b>✳</b><span>MORE PERSONALITY</span><b>✳</b><span>MADE TO STAND OUT</span><b>✳</b><span>WALK YOUR WEIRD</span><b>✳</b>
+</div></div>
+
+<section class="section" id="shop">
+  <div class="section-head">
+    <div><p class="eyebrow" style="color:var(--blue)">THE GOOD STUFF / 001</p><h2>Fresh out<br>the mould.</h2></div>
+    <p>Chunky silhouettes. Unexpected colour stories. Your next favourite pair is right here.</p>
+  </div>
+  <div class="filters" aria-label="Filter products">
+    <button class="filter active" data-filter="all">ALL PAIRS</button>
+    <button class="filter" data-filter="bold">BOLD ENERGY</button>
+    <button class="filter" data-filter="soft">SOFT CLUB</button>
+    <button class="filter" data-filter="daily">EVERYDAY</button>
+  </div>
+
+  <div class="products" id="products">
+    <article class="product-card" data-category="bold">
+      <div class="product-visual yellow" style="--shoe-color:#f7f0d8;--accent-color:#3434e9;--secondary-color:#ff785e">
+        <span class="tag">BESTSELLER</span>
+        <div class="shoe"><div class="shoe-upper"></div><div class="lace"></div><div class="shoe-mark">✦</div><div class="shoe-sole"></div></div>
+        <button class="quick-add" data-product="Melt Runner" aria-label="Add Melt Runner to bag">+</button>
+      </div>
+      <div class="product-info"><div><h3>Melt Runner</h3><p>Electric blue / cream</p></div><span class="price">₹3,499</span></div>
+    </article>
+
+    <article class="product-card" data-category="soft">
+      <div class="product-visual pink" style="--shoe-color:#f7b5cd;--accent-color:#7c43dc;--secondary-color:#ffed74;--sole-color:#fff8f0">
+        <span class="tag">NEW DROP</span>
+        <div class="shoe"><div class="shoe-upper"></div><div class="lace"></div><div class="shoe-mark">✦</div><div class="shoe-sole"></div></div>
+        <button class="quick-add" data-product="Peach Pop" aria-label="Add Peach Pop to bag">+</button>
+      </div>
+      <div class="product-info"><div><h3>Peach Pop</h3><p>Bubblegum / lilac</p></div><span class="price">₹3,799</span></div>
+    </article>
+
+    <article class="product-card" data-category="daily">
+      <div class="product-visual green" style="--shoe-color:#e9f4cb;--accent-color:#4b7b42;--secondary-color:#f6d65c">
+        <span class="tag">DAILY FAVOURITE</span>
+        <div class="shoe"><div class="shoe-upper"></div><div class="lace"></div><div class="shoe-mark">✦</div><div class="shoe-sole"></div></div>
+        <button class="quick-add" data-product="Garden Party" aria-label="Add Garden Party to bag">+</button>
+      </div>
+      <div class="product-info"><div><h3>Garden Party</h3><p>Sage / butter</p></div><span class="price">₹2,999</span></div>
+    </article>
+
+    <article class="product-card" data-category="bold">
+      <div class="product-visual lilac" style="--shoe-color:#d7c5ff;--accent-color:#ff674d;--secondary-color:#f8ec62">
+        <span class="tag">LIMITED EDITION</span>
+        <div class="shoe"><div class="shoe-upper"></div><div class="lace"></div><div class="shoe-mark">✦</div><div class="shoe-sole"></div></div>
+        <button class="quick-add" data-product="Cosmic Crumb" aria-label="Add Cosmic Crumb to bag">+</button>
+      </div>
+      <div class="product-info"><div><h3>Cosmic Crumb</h3><p>Lilac / tangerine</p></div><span class="price">₹4,199</span></div>
+    </article>
+
+    <article class="product-card" data-category="soft">
+      <div class="product-visual orange" style="--shoe-color:#ffe0a1;--accent-color:#f15b49;--secondary-color:#f7f1e5">
+        <span class="tag">FEEL-GOOD FIT</span>
+        <div class="shoe"><div class="shoe-upper"></div><div class="lace"></div><div class="shoe-mark">✦</div><div class="shoe-sole"></div></div>
+        <button class="quick-add" data-product="Sunny Side" aria-label="Add Sunny Side to bag">+</button>
+      </div>
+      <div class="product-info"><div><h3>Sunny Side</h3><p>Apricot / tomato</p></div><span class="price">₹3,299</span></div>
+    </article>
+
+    <article class="product-card" data-category="daily">
+      <div class="product-visual blue" style="--shoe-color:#fffdf3;--accent-color:#2929df;--secondary-color:#a9c9ff">
+        <span class="tag">THE CLASSIC</span>
+        <div class="shoe"><div class="shoe-upper"></div><div class="lace"></div><div class="shoe-mark">✦</div><div class="shoe-sole"></div></div>
+        <button class="quick-add" data-product="Cloud Nine" aria-label="Add Cloud Nine to bag">+</button>
+      </div>
+      <div class="product-info"><div><h3>Cloud Nine</h3><p>Cloud / cobalt</p></div><span class="price">₹2,799</span></div>
+    </article>
+  </div>
+</section>
+
+<section class="manifesto" id="story">
+  <div><p class="eyebrow">A LITTLE MORE YOU</p><h2>Normal is<br><span>overrated.</span></h2></div>
+  <div class="manifesto-copy">
+    <p>We believe the best things in life have a little extra shape, a little extra colour, and a whole lot of character. CLAYSOLE is for the outfit repeaters, the rule breakers, and the people who take the fun route home.</p>
+    <div class="stamp">GOOD<br>SHOES.<br>GOOD MOOD.<br>® 2026</div>
+  </div>
+</section>
+
+<section class="values" id="values">
+  <div class="value"><b>01 / BIG ENERGY</b><p>Playful shapes and colour combinations that bring personality to your everyday rotation.</p></div>
+  <div class="value"><b>02 / ALL-DAY COMFORT</b><p>Designed around the idea that looking good should feel good, too.</p></div>
+  <div class="value"><b>03 / YOUR OWN RULES</b><p>No dress codes for your personality. Wear the pair that feels like you.</p></div>
+</section>
+
+<section class="newsletter">
+  <div><h2>Good things<br>land here.</h2><p>New drops, good stories, and zero boring emails.</p></div>
+  <form class="signup" id="signup"><input type="email" placeholder="Your email address" aria-label="Email address" required><button type="submit">I'M IN ↗</button></form>
+</section>
+</main>
+
+<footer>
+  <div class="footer-top">
+    <div><div class="footer-logo">CLAY<span>SOLE</span>®</div><p class="footer-note">A little odd. A lot of sole.<br>Made for your kind of different.</p></div>
+    <div class="footer-links"><a href="#shop">SHOP</a><a href="#story">OUR STORY</a><a href="mailto:hello@claysole.example">CONTACT</a><a href="#values">FAQ</a></div>
+  </div>
+  <div class="footer-bottom"><span>© 2026 CLAYSOLE STUDIO</span><span>DESIGNED TO BE DIFFERENT.</span><span>MADE WITH PERSONALITY ✳</span></div>
+</footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+let bagCount = 0;
+let bagItems = [];
+let toastTimer;
+
+function notify(message) {
+  const toast = document.getElementById('toast');
+  toast.textContent = message;
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 2400);
+}
+
+document.querySelectorAll('.filter').forEach(button => {
+  button.addEventListener('click', () => {
+    document.querySelectorAll('.filter').forEach(b => b.classList.remove('active'));
+    button.classList.add('active');
+    const category = button.dataset.filter;
+    document.querySelectorAll('.product-card').forEach(card => {
+      card.hidden = category !== 'all' && card.dataset.category !== category;
+    });
+  });
+});
+
+document.querySelectorAll('.quick-add').forEach(button => {
+  button.addEventListener('click', () => {
+    bagCount++;
+    bagItems.push(button.dataset.product);
+    document.getElementById('bagCount').textContent = bagCount;
+    notify(button.dataset.product + ' added to your bag ✳');
+  });
+});
+
+document.getElementById('bagBtn').addEventListener('click', () => {
+  if (!bagItems.length) {
+    notify('Your bag is waiting for a little personality.');
+    return;
+  }
+  notify('Your bag: ' + bagItems.join(', ') + ' · ' + bagCount + ' item(s)');
+});
+
+document.getElementById('signup').addEventListener('submit', event => {
+  event.preventDefault();
+  notify('Thanks for joining the club! Connect a mailing service to save subscriptions.');
+  event.target.reset();
+});
+</script>
 </body>
 </html>
